@@ -1,0 +1,120 @@
+<div class="page" data-ng-controller="profileCtrl">
+
+    <div class="row ui-section">
+        <div class="col-lg-8 clearfix">
+            <h2 class="section-header">Update Profile</h2>
+        </div>
+        <div class="col-md-12">
+            <section class="panel panel-default">
+                <div class="panel-body padding-xl">
+                    <form name="form">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="name">Name <span class="space" style="color:#f44336;">*</span></label>
+                                    <input type="text" class="form-control" id="name" placeholder="Enter Name" ng-model="user.name"
+                                        name="name" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group" style="padding-top:8px;">
+                                    <label for="gender">Gender <span class="space" style="color:#f44336;">*</span></label><br>
+                                    <md-radio-group class="ui-md-radio-group-inline" ng-model="user.gender" id="gender">
+                                        <md-radio-button value="Female">Female</md-radio-button>
+                                        <md-radio-button value="Male">Male</md-radio-button>
+                                        <md-radio-button value="Transgender">Transgender</md-radio-button>
+                                    </md-radio-group>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="email">Email ID</label>
+                                    <input type="email" class="form-control" id="email" placeholder="Enter Email ID"
+                                        ng-model="user.email" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" name="email"
+                                        autocomplete="off">
+                                    <div ng-show="form.email.$error.pattern">
+                                        <span style="color: red !important;">Enter valid email address</span><br>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="mobile">Mobile Number <span class="space" style="color:#f44336;">*</span></label>
+                                    <input type="text" only-digits1 class="form-control" id="mobile" placeholder="Mobile"
+                                        ng-model="user.mobile" name="mobile" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="username">Username <span class="space" style="color:#f44336;">*</span></label>
+                                    <input type="text" class="form-control" id="username" placeholder="Enter Username"
+                                        ng-model="user.username" name="username" autocomplete="off" ng-disabled="true">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <label for="password">Password <span class="space" style="color:#f44336;">*</span></label>
+
+                                <div class="input-group">
+                                    <input type="{{inputType}}" class="form-control" id="password" placeholder="Enter Password"
+                                        ng-model="user.password" name="password" autocomplete="off">
+
+                                    <span ng-click="hideShowPassword()" class="input-group-addon">
+                                        <i class="material-icons" style="color: #535152 !important;font-size:15px;"
+                                            ng-show="hideshow">visibility</i>
+                                        <i class="material-icons" style="color: #535152 !important;font-size:15px;"
+                                            ng-show="!hideshow">visibility_off</i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12 textspaceapply">
+                                <div class="form-group">
+                                    <label for="role">Role <span class="space" style="color:#f44336;">*</span></label>
+                                    <input type="text" class="form-control" id="role" placeholder="Enter Role" ng-model="user.role"
+                                        name="role" autocomplete="off" ng-disabled="true">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="image">Image</label><br>
+                                            <label for="file-input">
+                                                <div class="filediv">Choose File </div>
+                                            </label>
+
+                                            <input type="file" id="file-input" style="display: none;" custom-on-change="imgFile">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 col-sm-12">
+                                        <div ng-show="showdiv" class="spaceabove spacebelow">
+                                            <md-progress-circular class="md-hue-2" md-mode="indeterminate" md-diameter="20px"></md-progress-circular>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-12">
+                                        <img data-ng-src="{{user.image.url}}" alt="" height="200px" width="200px" ng-if="user.image.url"
+                                            class="spacebelow">
+                                        <img data-ng-src="{{image1.url}}" alt="" height="200px" width="200px" ng-if="image1.url && !user.image.url"
+                                            class="spacebelow">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div style="padding-left: 16px;">
+                                <md-button type="submit" class="md-primary md-raised btn-w-md" ng-click="updateprofile(user)"
+                                    ng-disabled="!user.name || !user.username || !user.password || !user.mobile || !user.gender || !user.role  || form.email.$error.pattern">Submit</md-button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+
+</div>

@@ -1,7 +1,4 @@
 <div class="page page-dashboard" data-ng-controller="DashboardCtrl">
-    <div class="overlay1" ng-show="showloading">
-        <div class="loading-img"></div>
-    </div>
 
     <div class="row">
         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 clearfix" style="padding-left: 15px;">
@@ -9,16 +6,16 @@
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 clearfix" style="text-align: right;" ng-show="videosdisplay.length != 0">
             <a href="#!/3dmodel/view3dmodel" style="text-decoration: none">
-                <p style="font-size: 15px;padding-top: 21px;color: #1BAACC;">
-                    <md-icon style="color: #1BAACC;">visibility</md-icon>
-                </p>
+                <!-- <p style="font-size: 15px;padding-top: 21px;color: #1BAACC;"> -->
+                    <!-- <md-icon style="color: #1BAACC;">visibility</md-icon> -->
+                <!-- </p> -->
             </a>
         </div>
     </div>
     <div class="row" ng-show="videosdisplay.length == 0">
         <center>
             <br><br><br><br>
-            <md-button type="submit" class="md-primary md-raised btn-w-md" ng-click="gotoaddvideo()">Upload Video</md-button>
+            <md-button type="submit" class="md-primary md-raised btn-w-md">No Videos Uploaded</md-button>
         </center>
     </div>
     <section class="row ui-section" ng-show="videosdisplay.length != 0">
@@ -29,7 +26,7 @@
                     <div class="embed-responsive embed-responsive-16by9">
                         <video width="320" height="240" controls controlsList="nodownload" webkitallowfullscreen
                             mozallowfullscreen allowfullscreen>
-                            <source src="{{data.publicS3URL}}" type="video/mp4">
+                            <source src="{{data.publicS3URL | trusted}}" type="video/mp4">
                         </video>
                     </div>
 
@@ -52,11 +49,32 @@
                     </p>
                 </div>
                 <div class="card-action">
-                    <!--<a class="color-primary" ng-click="showdetail($event, data)"><span>Details</span></a>-->
-                    <a class="color-primary" target="_blank" href="{{data.potree_location}}"><span>3DModel</span></a>
+                    
+                    <a class="color-primary" href="{{data.potree_location}}" target="_blank"><span>3D Model</span></a>
+                    <!-- can't seem to get the 3D model to open in /3dmodel/potreeview -->
+                    <!-- <a class="color-primary" ng-click="openpotree(data.potree_location)"><span>3D Model</span></a> -->
+                        <!--<a class="color-primary" ng-click="showdetail($event, data)"><span>Details</span></a>-->
                     <!-- <a class="color-primary" ng-click="delete(data)"><span>Delete</span></a>-->
                 </div>
             </div>
+            
+            <div class="card-header ch-alt m-b-20" style="background-color: transparent !important; margin-top: 2em !important; padding-left: 18px; padding-right: 18px;"
+            ng-show="videosdisplay.length != 0">
+
         </div>
     </section>
+
+    <button class="btn btn-primary btn-icon" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"><i class="material-icons"
+        style="color: #fff !important;font-size:2em;">keyboard_arrow_left</i></button>&nbsp;&nbsp;
+<span>{{curPage + 1}} of {{ pagenum }}</span>&nbsp;&nbsp;
+<button class="btn btn-primary btn-icon" ng-disabled="curPage >= videosdisplay.length/pageSize - 1"
+    ng-click="curPage = curPage+1"><i class="material-icons" style="color: #fff !important;font-size:2em;">keyboard_arrow_right</i></button>
+<div class="btn-toolbar" role="toolbar" style="float: right;">
+    <div class="btn-group" style="background : transparent !important;">
+        <button type="button" class="btn btn-primary" ng-click="numberOfPages(10)" ng-disabled="!(videosdisplay.length > 10)">10</button>
+        <button type="button" class="btn btn-primary" ng-click="numberOfPages(25)" ng-disabled="!(videosdisplay.length > 25)">25</button>
+        <button type="button" class="btn btn-primary" ng-click="numberOfPages(50)" ng-disabled="!(videosdisplay.length > 50)">50</button>
+    </div>
+</div>
+    
 </div>

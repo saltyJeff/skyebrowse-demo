@@ -1,0 +1,81 @@
+<!-- <div class="page" data-ng-controller="viewuserCtrl">
+    <div class="overlay1" ng-show="showloading">
+
+        <div class="loading-img"></div>
+
+    </div>
+    <div class="row ui-section">
+        <div class="col-lg-8 clearfix">
+            <h2 class="section-header">View Users</h2>
+        </div>
+        <div class="col-md-12" ng-show="users.length != 0">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table no-margin">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>Mobile</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Manager</th> 
+                                    <!--<th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="user in users | pagination: curPage * pageSize | limitTo: pageSize">
+                                    <td>{{user.id}}</td>
+                                    <td>{{user.name}}</td>
+                                    <td>{{user.mobile_number}}</td>
+                                    <td>{{user.email}}</td>
+                                    <td>
+                                        <span ng-show="user.access_level == 4">Police Chief</span>
+                                        <span ng-show="user.access_level == 3">Lieutenant</span>
+                                        <span ng-show="user.access_level == 2">Police Officer</span>
+                                        <span ng-show="user.access_level == 1">Demo User</span>
+                                    </td>
+                                    <td>{{user.manager_username}}</td>
+                                    <td ng-cloak>
+                                            <span>
+                                                <a href="#!/edituser/{{user.username}}" style="text-decoration: none !important;">
+                                                    <i class="material-icons">create</i>
+                                                </a>
+                                            </span>
+                                            <span style="padding-left: 20px;">
+                                                <a ng-click="delete(user)">
+                                                    <i class="material-icons">delete_sweep</i>
+                                                </a>
+                                            </span>
+                                        </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-header ch-alt m-b-20" style="background-color: transparent !important; margin-top: 2em !important;"
+                        ng-show="users.length != 0">
+
+                        <button class="btn btn-primary btn-icon" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"><i
+                                class="material-icons" style="color: #fff !important;font-size:2em;">keyboard_arrow_left</i></button>&nbsp;&nbsp;
+                        <span>{{curPage + 1}} of {{ pagenum }}</span>&nbsp;&nbsp;
+                        <button class="btn btn-primary btn-icon" ng-disabled="curPage >= users.length/pageSize - 1"
+                            ng-click="curPage = curPage+1"><i class="material-icons" style="color: #fff !important;font-size:2em;">keyboard_arrow_right</i></button>
+                        <div class="btn-toolbar" role="toolbar" style="float: right;">
+                            <div class="btn-group" style="background : transparent !important;">
+                                <button type="button" class="btn btn-primary" ng-click="numberOfPages(10)" ng-disabled="!(users.length > 10)">10</button>
+                                <button type="button" class="btn btn-primary" ng-click="numberOfPages(25)" ng-disabled="!(users.length > 25)">25</button>
+                                <button type="button" class="btn btn-primary" ng-click="numberOfPages(50)" ng-disabled="!(users.length > 50)">50</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12" ng-show="users.length == 0">
+            <br><br><br>
+            <center>There is no users added yet.</center>
+        </div>
+    </div>
+
+</div> 

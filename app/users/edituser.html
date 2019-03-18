@@ -1,0 +1,106 @@
+<!-- <div class="page" data-ng-controller="edituserCtrl">
+    <div class="overlay1" ng-show="showloading">
+        <div class="loading-img"></div>
+    </div>
+    <div class="row ui-section">
+        <div class="col-lg-8 clearfix">
+            <h2 class="section-header">Edit User</h2>
+        </div>
+        <div class="col-md-12">
+            <section class="panel panel-default">
+                <div class="panel-body padding-xl">
+                    <form name="form">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="name">Name <span class="space" style="color:#f44336;">*</span></label>
+                                    <input type="text" class="form-control" id="name" placeholder="Enter Name" ng-model="user.name"
+                                        name="name" autocomplete="off" ng-disabled="true">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12 rolespace">
+                                <div class="form-group">
+                                    <label for="gender">Role <span class="space" style="color:#f44336;">*</span></label><br>
+                                    <md-select ng-model="user.role" aria-label="select" style="margin-top: -4px;"
+                                        ng-change="getmanagers(user.role)" ng-disabled="true">
+                                        <md-option value="" ng-selected="true" ng-disabled="true">Select Role</md-option>
+                                        <md-option ng-repeat="role in roles" value="{{role.id}}"> {{role.auth_type}}
+                                        </md-option>
+                                    </md-select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="email">Email ID</label>
+                                    <input type="email" class="form-control" id="email" placeholder="Enter Email ID"
+                                        ng-model="user.email" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" name="email"
+                                        autocomplete="off" ng-disabled="true">
+                                    <div ng-show="form.email.$error.pattern">
+                                        <span style="color: red !important;">Enter valid email address</span><br>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="mobile">Mobile Number <span class="space" style="color:#f44336;">*</span></label>
+                                    <input type="text" class="form-control" id="mobile" placeholder="Mobile" ng-model="user.mobile"
+                                        name="mobile" autocomplete="off" only-digits ng-pattern="/^\+?\d{3}[- ]?\d{3}[- ]?\d{4}$/"
+                                        ng-disabled="true">
+                                    <div ng-show="form.mobile.$error.pattern">
+                                        <span style="color: red !important;">Please match pattern "123-456-7890" </span><br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="username">Username <span class="space" style="color:#f44336;">*</span></label>
+                                    <input type="text" class="form-control" id="username" placeholder="Enter Username"
+                                        ng-model="user.username" name="username" autocomplete="off" ng-disabled="true">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <label for="password">Password <span class="space" style="color:#f44336;">*</span></label>
+
+                                <div class="input-group">
+                                    <input type="{{inputType}}" class="form-control" id="password" placeholder="Enter Password"
+                                        ng-model="user.password" name="password" autocomplete="off" ng-disabled="true">
+
+                                    <span ng-click="hideShowPassword()" class="input-group-addon">
+                                        <i class="material-icons" style="color: #535152 !important;font-size:15px;"
+                                            ng-show="hideshow">visibility</i>
+                                        <i class="material-icons" style="color: #535152 !important;font-size:15px;"
+                                            ng-show="!hideshow">visibility_off</i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12 managerspace">
+                                <div class="form-group">
+                                    <label for="gender">Manager <span class="space" style="color:#f44336;">*</span></label><br>
+                                    <md-select ng-model="user.manager_id" aria-label="select" style="margin-top: -4px;"
+                                        ng-disabled="true">
+                                        <md-option value="" ng-selected="true" ng-disabled="true">Select Manager</md-option>
+                                        <md-option ng-repeat="data in managers track by $index" value="{{data.id}}">
+                                            {{data.username}} </md-option>
+                                    </md-select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--  <div class="row">
+                            <div style="padding-left: 16px; padding-top: 3.9em;">
+                                <md-button type="submit" class="md-primary md-raised btn-w-md" ng-click="adduser(user)" ng-disabled="!user.name || !user.email || !user.username || !user.mobile || !user.password || !user.role || !user.manager_id || form.email.$error.pattern">Submit</md-button>
+                            </div>
+                        </div>-->
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+
+</div> -->

@@ -1,0 +1,410 @@
+<div class="page" data-ng-controller="settingsCtrl">
+
+    <div class="row ui-section">
+        <div class="col-lg-12 clearfix">
+            <h2 class="section-header">State Settings</h2>
+            <p>Here you can add the states.</p>
+        </div>
+        <div class="col-md-12">
+            <section class="panel panel-default" ng-cloak>
+                <div class="panel-body padding-xl">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4 class="subheader">Add State</h4>
+                                <input type="text" class="form-control" id="stateName" placeholder="Enter the state"
+                                    ng-model="stateName" name="stateName" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row" style="padding-left: 16px; padding-top: 20px;">
+                            <div style="padding-top: 5px;">
+                                <md-button type="submit" class="md-primary md-raised btn-w-md" ng-click="savestate(stateName)"
+                                    ng-disabled="!stateName">Submit</md-button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div style="float: left; padding-left: 20px;">
+                            <h4 class="subheader">View States</h4>
+                        </div>
+                        <div style="float: right; padding-right: 20px;">
+                            <md-input-container>
+                                <md-icon class="material-icons">search</md-icon>
+                                <input type="text" class="form-control" placeholder="{{ 'SEARCH' | translate }}"
+                                    ng-model="search">
+                            </md-input-container>
+                        </div>
+
+
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table no-margin">
+                            <thead>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>State</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in states | filter:search | pagination: curPage * pageSize | limitTo: pageSize ">
+                                    <td>{{item.id}}</td>
+                                    <td ng-if="item.viewedit == false">{{item.statename}}</td>
+                                    <td ng-if="item.viewedit != false"> <input type="text" class="form-control" id="statename"
+                                            placeholder="Enter the state" ng-model="nowstate.statename" name="statename"
+                                            autocomplete="off"></td>
+                                    <td ng-cloak>
+                                        <span ng-if="item.viewedit != false">
+                                            <a ng-click="updatestate(nowstate)" style="text-decoration: none !important;">
+                                                Update
+                                            </a>
+                                        </span>
+                                        <span ng-if="item.viewedit == false">
+                                            <a ng-click="editstate(item)" style="text-decoration: none !important;">
+                                                Edit
+                                            </a>
+                                        </span>
+                                        <span style="padding-left: 20px;">
+                                            <a ng-click="delete(item)">
+                                                Delete
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-header ch-alt m-b-20" style="background-color: transparent !important; margin-top: 2em !important;"
+                        ng-show="states.length !== 0">
+
+                        <button class="btn btn-primary btn-icon" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"><i
+                                class="material-icons" style="color: #fff !important;font-size:2em;">keyboard_arrow_left</i></button>&nbsp;&nbsp;
+                        <span>{{curPage + 1}} of {{ pagenum }}</span>&nbsp;&nbsp;
+                        <button class="btn btn-primary btn-icon" ng-disabled="curPage >= states.length/pageSize - 1"
+                            ng-click="curPage = curPage+1"><i class="material-icons" style="color: #fff !important;font-size:2em;">keyboard_arrow_right</i></button>
+                        <div class="btn-toolbar" role="toolbar" style="float: right;">
+                            <div class="btn-group" style="background : transparent !important;">
+                                <button type="button" class="btn btn-primary" ng-click="numberOfPages(5)" ng-disabled="!(states.length > 5)">5</button>
+                                <button type="button" class="btn btn-primary" ng-click="numberOfPages(10)" ng-disabled="!(states.length > 10)">10</button>
+                                <button type="button" class="btn btn-primary" ng-click="numberOfPages(20)" ng-disabled="!(states.length > 20)">20</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div class="row ui-section">
+        <div class="col-lg-12 clearfix">
+            <h2 class="section-header">Toast Settings</h2>
+            <p>Here you can add the toast content for add/update/delete functions and confirmation text for delete. All
+                fields are mandatory</p>
+        </div>
+        <div class="col-md-12">
+            <section class="panel panel-default">
+
+                <div class="panel-body padding-xl">
+                    <form name="form">
+
+
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="addusertoast">Add User </label>
+                                    <input type="text" class="form-control" id="addusertoast" placeholder="Add User Toast"
+                                        ng-model="toastdata.addusertoast" name="addusertoast" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="updateusertoast">Update User </label>
+                                    <input type="text" class="form-control" id="updateusertoast" placeholder="Update User Toast"
+                                        ng-model="toastdata.updateusertoast" name="updateusertoast" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="deleteusertoast">Delete User </label>
+                                    <input type="text" class="form-control" id="deleteusertoast" placeholder="Delete User Toast"
+                                        ng-model="toastdata.deleteusertoast" name="deleteusertoast" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="deleteuserconfirmtext">Delete User Confirmation </label>
+                                    <input type="text" class="form-control" id="deleteuserconfirmtext" placeholder="Delete User Confirmation Toast"
+                                        ng-model="toastdata.deleteuserconfirmtext" name="deleteuserconfirmtext"
+                                        autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="divider divider-dashed divider-lg pull-in"></div>
+
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="imgvalidatetoast">Image Validation </label>
+                                    <input type="text" class="form-control" id="imgvalidatetoast" placeholder="Image Validation Toast"
+                                        ng-model="toastdata.imgvalidatetoast" name="imgvalidatetoast" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="usernamevalidatetoast">Username Validation </label>
+                                    <input type="text" class="form-control" id="usernamevalidatetoast" placeholder="Username Validation Toast"
+                                        ng-model="toastdata.usernamevalidatetoast" name="usernamevalidatetoast"
+                                        autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="emailvalidatetoast">Email ID Validation </label>
+                                    <input type="text" class="form-control" id="emailvalidatetoast" placeholder="Email ID Validation Toast"
+                                        ng-model="toastdata.emailvalidatetoast" name="emailvalidatetoast" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="mailsenttoast">Mail Sent </label>
+                                    <input type="text" class="form-control" id="mailsenttoast" placeholder="Mail Sent Toast"
+                                        ng-model="toastdata.mailsenttoast" name="mailsenttoast" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="mailresenttoast">Mail Sent Error </label>
+                                    <input type="text" class="form-control" id="mailresenttoast" placeholder="Mail ReSent Error Toast"
+                                        ng-model="toastdata.mailresenttoast" name="mailresenttoast" autocomplete="off">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="divider divider-dashed divider-lg pull-in"></div>
+
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="addvideotoast">Add Video </label>
+                                    <input type="text" class="form-control" id="addvideotoast" placeholder="Add Video Toast"
+                                        ng-model="toastdata.addvideotoast" name="addvideotoast" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="deletevideotoast">Delete Video </label>
+                                    <input type="text" class="form-control" id="deletevideotoast" placeholder="Delete Video Toast"
+                                        ng-model="toastdata.deletevideotoast" name="deletevideotoast" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="deletevideoconfirmtext">Delete Video Confirmation </label>
+                                    <input type="text" class="form-control" id="deletevideoconfirmtext" placeholder="Delete Video Confirmation Toast"
+                                        ng-model="toastdata.deletevideoconfirmtext" name="deletevideoconfirmtext"
+                                        autocomplete="off">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="uploadvideotoast">Upload Video Error </label>
+                                    <input type="text" class="form-control" id="uploadvideotoast" placeholder="Upload Video Error Toast"
+                                        ng-model="toastdata.uploadvideotoast" name="uploadvideotoast" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="videofilevalidatetoast">Video File Validation </label>
+                                    <input type="text" class="form-control" id="videofilevalidatetoast" placeholder="Delete Video Confirmation Toast"
+                                        ng-model="toastdata.videofilevalidatetoast" name="videofilevalidatetoast"
+                                        autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="videofilesizetoast">Video File Size Error </label>
+                                    <input type="text" class="form-control" id="videofilesizetoast" placeholder="Video File Size Error Toast"
+                                        ng-model="toastdata.videofilesizetoast" name="videofilesizetoast" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="divider divider-dashed divider-lg pull-in"></div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="addstatetoast">Add State </label>
+                                    <input type="text" class="form-control" id="addstatetoast" placeholder="Add State Toast"
+                                        ng-model="toastdata.addstatetoast" name="addstatetoast" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="updatestatetoast">Update State </label>
+                                    <input type="text" class="form-control" id="updatestatetoast" placeholder="Update State Toast"
+                                        ng-model="toastdata.updatestatetoast" name="updatestatetoast" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="deletestatetoast">Delete State </label>
+                                    <input type="text" class="form-control" id="deletestatetoast" placeholder="Delete State Toast"
+                                        ng-model="toastdata.deletestatetoast" name="deletestatetoast" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="deletestateconfirmtext">Delete State Confirmation </label>
+                                    <input type="text" class="form-control" id="deletestateconfirmtext" placeholder="Delete State Confirmation Toast"
+                                        ng-model="toastdata.deletestateconfirmtext" name="deletestateconfirmtext"
+                                        autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="divider divider-dashed divider-lg pull-in"></div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="loginerrortoast">Credential Validation Error </label>
+                                    <input type="text" class="form-control" id="loginerrortoast" placeholder="Credential Validation Error Toast"
+                                        ng-model="toastdata.loginerrortoast" name="loginerrortoast" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="usernamepasswordreqtoast">Credential Required Error </label>
+                                    <input type="text" class="form-control" id="usernamepasswordreqtoast" placeholder="Credential Required Error Toast"
+                                        ng-model="toastdata.usernamepasswordreqtoast" name="usernamepasswordreqtoast"
+                                        autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="passworderrortoast">Password Validation Error </label>
+                                    <input type="text" class="form-control" id="passworderrortoast" placeholder="Password Validation Error Toast"
+                                        ng-model="toastdata.passworderrortoast" name="passworderrortoast" autocomplete="off">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="passwordreqtoast">Password Required Error </label>
+                                    <input type="text" class="form-control" id="passwordreqtoast" placeholder="Password Required Error Toast"
+                                        ng-model="toastdata.passwordreqtoast" name="passwordreqtoast" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="divider divider-dashed divider-lg pull-in"></div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="profileupdatetoast">Profile Update </label>
+                                    <input type="text" class="form-control" id="profileupdatetoast" placeholder="Profile Update Toast"
+                                        ng-model="toastdata.profileupdatetoast" name="profileupdatetoast" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="settingsupdatetoast">Settings Update </label>
+                                    <input type="text" class="form-control" id="settingsupdatetoast" placeholder="Settings Update Toast"
+                                        ng-model="toastdata.settingsupdatetoast" name="settingsupdatetoast"
+                                        autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="contactmailsenttoast">Contact Mail Sent </label>
+                                    <input type="text" class="form-control" id="contactmailsenttoast" placeholder="Contact Mail Sent Toast"
+                                        ng-model="toastdata.contactmailsenttoast" name="contactmailsenttoast"
+                                        autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="contactmailerrtoast">Contact Mail Sent Error </label>
+                                    <input type="text" class="form-control" id="contactmailerrtoast" placeholder="Contact Mail Sent Error Toast"
+                                        ng-model="toastdata.contactmailerrtoast" name="contactmailerrtoast"
+                                        autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div style="padding-left: 16px; padding-top: 20px;">
+                                <md-button type="submit" class="md-primary md-raised btn-w-md" ng-click="updatesettings(toastdata)"
+                                    ng-disabled="!toastdata.addusertoast || !toastdata.updateusertoast || !toastdata.deleteusertoast || !toastdata.deleteuserconfirmtext || !toastdata.addvideotoast || !toastdata.deletevideotoast || !toastdata.deletevideoconfirmtext || !toastdata.profileupdatetoast || !toastdata.settingsupdatetoast || !toastdata.addstatetoast || !toastdata.updatestatetoast || !toastdata.deletestatetoast || !toastdata.deletestateconfirmtext || !toastdata.imgvalidatetoast || !toastdata.usernamevalidatetoast || !toastdata.emailvalidatetoast || !toastdata.mailsenttoast || !toastdata.mailresenttoast || !toastdata.uploadvideotoast || !toastdata.videofilevalidatetoast || !toastdata.loginerrortoast || !toastdata.usernamepasswordreqtoast || !toastdata.passworderrortoast || !toastdata.passwordreqtoast || !toastdata.videofilesizetoast ||!toastdata.contactmailsenttoast || !toastdata.contactmailerrtoast">Submit</md-button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script type="text/ng-template" id="dialog2.tmpl.html">
+        <md-dialog aria-label="Mango (Fruit)">
+
+            <md-toolbar>
+              <div class="md-toolbar-tools">
+                <h2>Edit State</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon style="color: #fff !important;">close</md-icon>
+                </md-button>
+              </div>
+            </md-toolbar>
+
+            <md-dialog-content>
+              <div class="md-dialog-content">
+                    <div class="panel-body padding-xl">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>State</h4>
+                                      <input type="text" class="form-control" id="statename" placeholder="Enter the state" ng-model="nowstate.statename" name="statename" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="row" style="padding-left: 16px; padding-top: 20px;">
+                                <div style="padding-top: 5px;">
+                                    <md-button type="submit" class="md-primary md-raised btn-w-md" ng-click="updatestate(nowstate)"  ng-disabled="!nowstate.statename">Submit</md-button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+              </div>
+            </md-dialog-content>
+
+        </md-dialog>
+    </script>
+
+</div>

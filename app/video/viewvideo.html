@@ -1,0 +1,42 @@
+<div class="page" data-ng-controller="viewvideoCtrl">
+    <section class="row ui-section">
+        <div class="col-lg-8 clearfix">
+            <h2 class="section-header">View Video</h2>
+        </div>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-4" ng-repeat="data in videos| pagination: curPage * pageSize | limitTo: pageSize">
+                    <div class="card bg-white">
+                        <div class="card-image">
+                            <iframe ng-src="{{data.link | trusted}}" width="100%" height="auto" frameborder="0" allow="autoplay; encrypted-media"
+                                allowfullscreen></iframe>
+                        </div>
+                        <div class="card-content" style="height: 180px;">
+                            <p>{{data.description | limitTo: 250 }}{{data.description.length > 250 ? '...' : ' '}}</p>
+                        </div>
+                        <div class="card-action" ng-show="user != 'End User'">
+                            <a href="javascript:;">Edit</a>
+                            <a class="color-primary" ng-click="delete($event)">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-header ch-alt m-b-20" style="background-color: transparent !important; margin-top: 2em !important; padding-left: 18px; padding-right: 18px;"
+            ng-show="videos.length !== 0">
+
+            <button class="btn btn-primary btn-icon" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"><i class="material-icons"
+                    style="color: #fff !important;font-size:2em;">keyboard_arrow_left</i></button>&nbsp;&nbsp;
+            <span>{{curPage + 1}} of {{ pagenum }}</span>&nbsp;&nbsp;
+            <button class="btn btn-primary btn-icon" ng-disabled="curPage >= videos.length/pageSize - 1" ng-click="curPage = curPage+1"><i
+                    class="material-icons" style="color: #fff !important;font-size:2em;">keyboard_arrow_right</i></button>
+            <div class="btn-toolbar" role="toolbar" style="float: right;">
+                <div class="btn-group" style="background : transparent !important;">
+                    <button type="button" class="btn btn-primary" ng-click="numberOfPages(10)" ng-disabled="!(videos.length > 10)">10</button>
+                    <button type="button" class="btn btn-primary" ng-click="numberOfPages(25)" ng-disabled="!(videos.length > 25)">25</button>
+                    <button type="button" class="btn btn-primary" ng-click="numberOfPages(50)" ng-disabled="!(videos.length > 50)">50</button>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

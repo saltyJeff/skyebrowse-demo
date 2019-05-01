@@ -43,17 +43,25 @@
 
 	<script>
 
-		window.viewer = new Potree.Viewer(document.getElementById("potree_render_area"));
+	window.viewer = new Potree.Viewer(document.getElementById("potree_render_area"));
+		if (/Mobi|Android/i.test(navigator.userAgent)) {
+			viewer.setEDLEnabled(false);
+			viewer.useHQ = false;
+			console.log("skyebrowse", "mobile!");
+		}
+		else{
+			viewer.setEDLEnabled(true);
+			viewer.useHQ = true;
+			console.log("skyebrowse", "computer!");
+		}
 
 		viewer.setFOV(69);
 		viewer.setPointBudget(10*1000*1000);
 		document.title = "";
-		viewer.setEDLEnabled(false);
 		viewer.setBackground("gradient"); // ["skybox", "gradient", "black", "white"];
 		viewer.setDescription(``);
 		viewer.loadSettingsFromURL();
 		viewer.setMinNodeSize(0.69);
-		//viewer.useHQ = true;
 
 		viewer.loadGUI(() => {
 			viewer.setLanguage('en');

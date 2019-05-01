@@ -30,33 +30,31 @@
 	<script src="libs/jstree/jstree.js"></script>
 	<script src="libs/potree/potree.js"></script>
 	<script src="libs/plasio/js/laslaz.js"></script>
-	
+
 	<!-- INCLUDE ADDITIONAL DEPENDENCIES HERE -->
 		document.title = "";
-		viewer.setEDLEnabled(true);
 		viewer.setBackground("gradient"); // ["skybox", "gradient", "black", "white"];
 		viewer.setDescription(``);
-	
+
 	<div class="potree_container" style="position: absolute; width: 100%; height: 100%; left: 0px; top: 0px; ">
 		<div id="potree_render_area"></div>
 		<div id="potree_sidebar_container"> </div>
 	</div>
-	
+
 	<script>
-	
+
 		window.viewer = new Potree.Viewer(document.getElementById("potree_render_area"));
-		
-		viewer.setEDLEnabled(false);
+
 		viewer.setFOV(69);
 		viewer.setPointBudget(10*1000*1000);
 		document.title = "";
-		viewer.setEDLEnabled(true);
+		viewer.setEDLEnabled(false);
 		viewer.setBackground("gradient"); // ["skybox", "gradient", "black", "white"];
 		viewer.setDescription(``);
 		viewer.loadSettingsFromURL();
 		viewer.setMinNodeSize(0.69);
 		//viewer.useHQ = true;
-		
+
 		viewer.loadGUI(() => {
 			viewer.setLanguage('en');
 			//$("#menu_appearance").next().show();
@@ -64,20 +62,20 @@
 			//$("#menu_scene").next().show();
 			//viewer.toggleSidebar();
 		});
-		
+
 		Potree.loadPointCloud("pointclouds/PotreeModel/cloud.js", "PotreeModel", e => {
 			let pointcloud = e.pointcloud;
 			let material = pointcloud.material;
 			viewer.scene.addPointCloud(pointcloud);
-			material.pointColorType = Potree.PointColorType.RGB; // any Potree.PointColorType.XXXX 
+			material.pointColorType = Potree.PointColorType.RGB; // any Potree.PointColorType.XXXX
 			material.size = 1.5;
 			material.pointSizeType = Potree.PointSizeType.ADAPTIVE;
 			material.shape = Potree.PointShape.CIRCLE;
 			viewer.fitToScreen();
 		});
-		
+
 	</script>
-	
-	
+
+
   </body>
 </html>

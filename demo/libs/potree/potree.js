@@ -7168,7 +7168,7 @@ Potree.InputHandler = class InputHandler extends THREE.EventDispatcher {
 Potree.FirstPersonControls = class FirstPersonControls extends THREE.EventDispatcher {
 	constructor (viewer) {
 		super();
-
+		console.trace('fps')
 		this.viewer = viewer;
 		this.renderer = viewer.renderer;
 
@@ -7948,7 +7948,7 @@ Potree.OrbitControls = class OrbitControls extends THREE.EventDispatcher{
 	
 	constructor(viewer){
 		super();
-		
+		console.trace('orbit')
 		this.viewer = viewer;
 		this.renderer = viewer.renderer;
 
@@ -8218,7 +8218,7 @@ Potree.OrbitControls = class OrbitControls extends THREE.EventDispatcher{
 Potree.EarthControls = class EarthControls extends THREE.EventDispatcher {
 	constructor (viewer) {
 		super(viewer);
-
+		console.trace('earth')
 		this.viewer = viewer;
 		this.renderer = viewer.renderer;
 
@@ -9787,9 +9787,44 @@ Potree.PointCloudOctree = class extends Potree.PointCloudTree {
 		}
 
 		let disposeListener = function () {
+			// ORIGINAL COPY (probably bad)
+			/*
 			let childIndex = parseInt(geometryNode.name[geometryNode.name.length - 1]);
 			parent.sceneNode.remove(node.sceneNode);
 			parent.children[childIndex] = geometryNode;
+			*/
+
+			//TODO: new copy from issue https://github.com/potree/potree/issues/628
+			let childIndex = parseInt(geometryNode.name[geometryNode.name.length - 1]);
+			//check if sceneNode Deleted maybe can be removed for permformance gain it shouldn't be null
+			if(sceneNode !== null){
+				//check if has geometry it could be removed also...
+				if(sceneNode.geometry){
+					//delete attributes solve a big memory leak...
+					for(let key in sceneNode.geometry.attributes){
+							delete sceneNode.geometry.attributes[key];
+					}
+					//dispose geometry
+					sceneNode.geometry.dispose();
+					sceneNode.geometry=undefined;
+				}
+				//check if has material, can be removed...
+				if(sceneNode.material){
+					//check if has material map, can be removed...
+					if(sceneNode.material.map){
+						sceneNode.material.map.dispose();
+						sceneNode.material.map=undefined;
+						}
+					//dispose material
+					sceneNode.material.dispose();
+					sceneNode.material=undefined;
+				}
+				//remove node from scene
+				parent.sceneNode.remove(sceneNode);
+				//set node explicitly undefined.
+				sceneNode=undefined;
+				parent.children[childIndex] = geometryNode;
+			}
 		};
 		geometryNode.oneTimeDisposeHandlers.push(disposeListener);
 

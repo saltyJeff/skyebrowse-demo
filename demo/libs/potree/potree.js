@@ -12562,11 +12562,17 @@ Potree.Measure = class Measure extends THREE.Object3D {
 
 		return this.getAngleBetweenLines(point, previous, next);
 	};
-
+	annotation = null
 	update () {
 		if (this.points.length === 0) {
 			return;
 		} else if (this.points.length === 1) {
+			if(this.annotation == null && this.maxMarkers == 1) {
+				this.annotation = window.prompt('Annotation label')
+				if(!this.annotation) {
+					this.annotation = 'Annotation'
+				}
+			}
 			let point = this.points[0];
 			let position = point.position;
 			this.spheres[0].position.copy(position);
@@ -12576,7 +12582,13 @@ Potree.Measure = class Measure extends THREE.Object3D {
 				
 				let msg = position.toArray().map(p => Potree.utils.addCommas(p.toFixed(2))).join(", ");
 				//let msg = Potree.utils.addCommas(position.z.toFixed(2) + " " + this.lengthUnit.code);
-				coordinateLabel.setText(msg);
+				if(this.maxMarkers == 1) {
+					coordinateLabel.setText(this.annotation)
+				}
+				else {
+					coordinateLabel.setText(msg);
+				}
+				//TODO: area of note set label
 
 				coordinateLabel.visible = this.showCoordinates;
 			}
@@ -12798,7 +12810,9 @@ Potree.MeasuringTool = class MeasuringTool extends THREE.EventDispatcher {
 		this.viewer.inputHandler.registerInteractiveScene(this.scene);
 
 		this.onRemove = (e) => { this.scene.remove(e.measurement);};
-		this.onAdd = e => {this.scene.add(e.measurement);};
+		this.onAdd = e => {
+			this.scene.add(e.measurement);
+		};
 
 		for(let measurement of viewer.scene.measurements){
 			this.onAdd({measurement: measurement});
@@ -12849,9 +12863,9 @@ Potree.MeasuringTool = class MeasuringTool extends THREE.EventDispatcher {
 		};
 
 		let insertionCallback = (e) => {
+			console.log('potato')
 			if (e.button === THREE.MOUSE.LEFT) {
 				measure.addMarker(measure.points[measure.points.length - 1].position.clone());
-
 				if (measure.points.length >= measure.maxMarkers) {
 					cancel.callback();
 				}
@@ -19343,17 +19357,6 @@ Potree.Viewer = class PotreeViewer extends THREE.EventDispatcher{
 		}
 	};
 
-	toggleSidebar () {
-		let renderArea = $('#potree_render_area');
-		let isVisible = renderArea.css('left') !== '0px';
-
-		if (isVisible) {
-			renderArea.css('left', '0px');
-		} else {
-			renderArea.css('left', '300px');
-		}
-	};
-
 	toggleMap () {
 		// let map = $('#potree_map');
 		// map.toggle(100);
@@ -19370,21 +19373,19 @@ Potree.Viewer = class PotreeViewer extends THREE.EventDispatcher{
 			this.guiLoadTasks.push(callback);
 		}
 	}
-
+	sidebarContainer = null
 	loadGUI(callback){
 
 		this.onGUILoaded(callback);
 
 		let viewer = this;
 		let sidebarContainer = $('#potree_sidebar_container');
+		this.sidebarContainer = sidebarContainer
 		sidebarContainer.load(new URL(Potree.scriptPath + '/sidebar.html').href, () => {
 			sidebarContainer.css('width', '300px');
 			sidebarContainer.css('height', '100%');
 
-			let imgMenuToggle = document.createElement('img');
-			imgMenuToggle.src = new URL(Potree.resourcePath + '/icons/menu_button.svg').href;
-			imgMenuToggle.onclick = this.toggleSidebar;
-			imgMenuToggle.classList.add('potree_menu_toggle');
+			//TODO: edit
 
 			let imgMapToggle = document.createElement('img');
 			imgMapToggle.src = new URL(Potree.resourcePath + '/icons/map_icon.png').href;
@@ -19393,7 +19394,6 @@ Potree.Viewer = class PotreeViewer extends THREE.EventDispatcher{
 			imgMapToggle.id = 'potree_map_toggle';
 
 			viewer.renderArea.insertBefore(imgMapToggle, viewer.renderArea.children[0]);
-			viewer.renderArea.insertBefore(imgMenuToggle, viewer.renderArea.children[0]);
 
 			this.mapView = new Potree.MapView(this);
 			this.mapView.init();
@@ -21808,11 +21808,12 @@ initSidebar = (viewer) => {
 			}
 		));
 
-		// POINT
+		// DIALOG
 		elToolbar.append(createToolIcon(
-			Potree.resourcePath + '/icons/point.svg',
+			Potree.resourcePath + '/icons/dialog.png',
 			'[title]tt.point_measurement',
 			function () {
+				//TODO: area of note
 				$('#menu_measurements').next().slideDown();
 				let measurement = measuringTool.startInsertion({
 					showDistances: false,

@@ -1,0 +1,29 @@
+.hidden {
+    display: none;
+}
+#potree_sidebar_container {
+    z-index: 100;
+}
+#sidebar_header {
+    display: flex;
+    flex-direction: row;
+}
+#sb-header {
+    flex: 1;
+}
+.toggleButton {
+    width: 64px;
+    height: 67px;
+}
+.floating {
+    position: fixed;
+    z-index: 100 !important;   
+}
+.hiding {
+    z-index: 0 !important;
+}
+img[title="Angle measurement"],
+img[title="Volume measurement"],
+img[title="Height profile"] {
+    display: none;
+}

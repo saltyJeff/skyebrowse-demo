@@ -13,6 +13,8 @@
 	<link rel="stylesheet" type="text/css" href="libs/openlayers3/ol.css">
 	<link rel="stylesheet" type="text/css" href="libs/spectrum/spectrum.css">
 	<link rel="stylesheet" type="text/css" href="libs/jstree/themes/mixed/style.css">
+
+	<link rel="stylesheet" type="text/css" href="skyebrowse.css">
 </head>
 
 <body>
@@ -31,60 +33,23 @@
 	<script src="libs/potree/potree.js"></script>
 	<script src="libs/plasio/js/laslaz.js"></script>
 
-	<!-- INCLUDE ADDITIONAL DEPENDENCIES HERE -->
+	<!-- INCLUDE ADDITIONAL DEPENDENCIES HERE
 		document.title = "";
 		viewer.setBackground("gradient"); // ["skybox", "gradient", "black", "white"];
 		viewer.setDescription(``);
+	-->
 
-	<div class="potree_container" style="position: absolute; width: 100%; height: 100%; left: 0px; top: 0px; ">
+	<div id="potree_container" class="potree_container" style="position: absolute; width: 100%; height: 100%; left: 0px; top: 0px; ">
 		<div id="potree_render_area"></div>
 		<div id="potree_sidebar_container"> </div>
 	</div>
-
-	<script>
-
-	window.viewer = new Potree.Viewer(document.getElementById("potree_render_area"));
-		if (/Mobi|Android/i.test(navigator.userAgent)) {
-			viewer.setEDLEnabled(false);
-			viewer.useHQ = false;
-			console.log("skyebrowse", "mobile!");
-		}
-		else{
-			viewer.setEDLEnabled(true);
-			viewer.useHQ = true;
-			console.log("skyebrowse", "computer!");
-		}
-
-		viewer.setFOV(69);
-		viewer.setPointBudget(5*1000*1000);
-		document.title = "";
-		viewer.setBackground("gradient"); // ["skybox", "gradient", "black", "white"];
-		viewer.setDescription(``);
-		viewer.loadSettingsFromURL();
-		viewer.setMinNodeSize(0.69);
-
-		viewer.loadGUI(() => {
-			viewer.setLanguage('en');
-			//$("#menu_appearance").next().show();
-			$("#menu_tools").next().show();
-			//$("#menu_scene").next().show();
-			//viewer.toggleSidebar();
-		});
-
-		Potree.loadPointCloud("pointclouds/PotreeModel/cloud.js", "PotreeModel", e => {
-			let pointcloud = e.pointcloud;
-			let material = pointcloud.material;
-			material.pointColorType = Potree.PointColorType.RGB; // any Potree.PointColorType.XXXX
-			material.size = 1.5;
-			material.pointSizeType = Potree.PointSizeType.ADAPTIVE;
-			material.shape = Potree.PointShape.SQUARE;
-
-			viewer.scene.addPointCloud(pointcloud);
-			viewer.fitToScreen();
-		});
-
-	</script>
-
-
+	<img 
+		style="display: block; cursor: pointer;"
+		id="toggleButton"
+		class="toggleButton floating"
+		src="http://127.0.0.1:8080/libs/potree/resources/icons/menu_button.svg"
+		onclick="toggleSidebar()"/>
+	<script src="skyebrowse.js"></script>
+	
   </body>
 </html>

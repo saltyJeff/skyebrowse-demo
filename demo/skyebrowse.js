@@ -29,6 +29,11 @@ function initPotree() {
         $("#menu_tools").next().show();
         //$("#menu_scene").next().show();
         //viewer.toggleSidebar();
+
+        $('.toggleButton').each(function () {
+            console.log(this)
+            $(this).attr('src', Potree.resourcePath + '/icons/menu_button.svg');
+        })
     });
 
     Potree.loadPointCloud("pointclouds/PotreeModel/cloud.js", "PotreeModel", e => {
@@ -48,7 +53,6 @@ function toggleSidebar () {
     $('#potree_sidebar_container').toggleClass('hiding')
 	$('#toggleButton').toggle();
 };
-$('.toggleButton').attr('src', Potree.resourcePath + '/icons/menu_button.svg');
 
 // very important this order stays
 initPotree();

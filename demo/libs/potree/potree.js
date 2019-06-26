@@ -18717,7 +18717,8 @@ Potree.Viewer = class PotreeViewer extends THREE.EventDispatcher{
 
 		this.loadGUI = this.loadGUI.bind(this);
 
-		}catch(e){
+		}
+		catch(e){
 			this.onCrash(e);
 		}
 	}

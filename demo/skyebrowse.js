@@ -48,6 +48,7 @@ function toggleSidebar () {
     $('#potree_sidebar_container').toggleClass('hiding')
 	$('#toggleButton').toggle();
 };
+$('.toggleButton').attr('src', Potree.resourcePath + '/icons/menu_button.svg');
 
 // very important this order stays
 initPotree();

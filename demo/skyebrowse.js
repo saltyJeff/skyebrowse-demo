@@ -9,18 +9,18 @@ function initPotree() {
         console.log("skyebrowse", "mobile!");
     }
     else{
-        viewer.setEDLEnabled(true);
+        viewer.setEDLEnabled(false);
         viewer.useHQ = true;
         console.log("skyebrowse", "computer!");
     }
 
     viewer.setFOV(69);
-    viewer.setPointBudget(1*1000*1000);
+    viewer.setPointBudget(3*1000*1000);
     document.title = "";
     viewer.setBackground("gradient"); // ["skybox", "gradient", "black", "white"];
     viewer.setDescription(``);
     viewer.loadSettingsFromURL();
-    viewer.setMinNodeSize(0.69);
+    viewer.setMinNodeSize(1.5);
     viewer.logMessages = true;
 
     viewer.loadGUI(() => {
@@ -40,7 +40,7 @@ function initPotree() {
         let pointcloud = e.pointcloud;
         let material = pointcloud.material;
         material.pointColorType = Potree.PointColorType.RGB; // any Potree.PointColorType.XXXX
-        material.size = 1.5;
+        material.size = 1;
         material.pointSizeType = Potree.PointSizeType.ADAPTIVE;
         material.shape = Potree.PointShape.CIRCLE;
 
